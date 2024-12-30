@@ -1,23 +1,12 @@
 import sys
 
-
 def main():
-        
     while True:
-        #Uncomment this block to pass the first stage
         sys.stdout.write("$ ")
+        sys.stdout.flush()  # Ensure the prompt is displayed immediately
 
-        #Wait for user input
         command = input()
-        print(f"{command}: command not found\n")
-        if command == True:
-            continue
-
-
-  
-
-
-
+        print(f"{command}: command not found")
 
 if __name__ == "__main__":
     main()
