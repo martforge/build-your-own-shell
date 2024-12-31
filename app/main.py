@@ -17,10 +17,15 @@ def main():
                 print(f"{cmd} is a shell builtin")
             else:
                 # Search for the command in directories listed in PATH
-                path_dirs = os.environ.get('PATH', '').split(';')  # Windows uses ';' instead of ':'
+                path_dirs = os.environ.get('PATH', '').split(';')  # Use ';' for Windows, ':' for Unix-based systems
+                
+                print(f"Debug: Searching in directories: {path_dirs}")  # Debugging line to check PATH
+
                 found = False
                 for directory in path_dirs:
                     command_path = os.path.join(directory, cmd)
+                    print(f"Debug: Checking {command_path}")  # Debugging line to check the command path
+                    
                     if os.path.isfile(command_path) and os.access(command_path, os.X_OK):
                         print(f"{cmd} is {command_path}")
                         found = True
