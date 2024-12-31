@@ -16,8 +16,8 @@ def main():
             if cmd in ['echo', 'exit', 'type']:
                 print(f"{cmd} is a shell builtin")
             else:
-                # Search for the command in directories listed in PATH
-                path_dirs = os.environ.get('PATH', '').split(';')  # Use ';' for Windows, ':' for Unix-based systems
+                # Get PATH from environment variable
+                path_dirs = os.environ.get('PATH', '').split(os.pathsep)  # Use the system-specific separator for PATH
                 
                 print(f"Debug: Searching in directories: {path_dirs}")  # Debugging line to check PATH
 
