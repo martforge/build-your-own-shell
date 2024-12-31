@@ -9,13 +9,18 @@ def main():
         if command == 'exit 0':
             break
         
-        # Handle 'type' command: Check if it's a known builtin
+        # Handle 'type' command: Check if it's a known builtin or an external program
         if command.startswith('type '):
             cmd = command[5:].strip()
             if cmd in ['echo', 'exit', 'type']:
                 print(f"{cmd} is a shell builtin")
             else:
-                print(f"{cmd}: not found")
+                # Check if the command is in the system's PATH
+                program_path = shutil.which(cmd)
+                if program_path:
+                    print(f"{cmd} is {program_path}")
+                else:
+                    print(f"{cmd}: not found")
         
         # Handle 'echo' command
         elif command.startswith('echo '):
