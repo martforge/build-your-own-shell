@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 def main():
     while True:
@@ -16,9 +17,8 @@ def main():
             if cmd in ['echo', 'exit', 'type']:
                 print(f"{cmd} is a shell builtin")
             else:
-                # Get PATH from environment variable
-                path_dirs = os.environ.get('PATH', '').split(os.pathsep)  # Use the system-specific separator for PATH
-                
+                # Search for the command in directories listed in PATH
+                path_dirs = os.environ.get('PATH', '').split(';')  # Use ';' for Windows, ':' for Unix-based systems
                 found = False
                 for directory in path_dirs:
                     command_path = os.path.join(directory, cmd)
@@ -35,9 +35,33 @@ def main():
         elif command.startswith('echo '):
             print(command[5:])
         
-        # Handle invalid commands
+        # Handle running external commands with arguments
         else:
-            print(f"{command}: command not found")
+            # Split the command and its arguments
+            parts = command.split()
+            cmd = parts[0]
+            args = parts[1:]
+
+            # Search for the command in PATH
+            path_dirs = os.environ.get('PATH', '').split(';')  # Use ';' for Windows, ':' for Unix-based systems
+            found = False
+            for directory in path_dirs:
+                command_path = os.path.join(directory, cmd)
+                
+                if os.path.isfile(command_path) and os.access(command_path, os.X_OK):
+                    try:
+                        # Execute the command with arguments
+                        result = subprocess.run([command_path] + args, capture_output=True, text=True)
+                        print(result.stdout.strip())  # Print the output of the command
+                        found = True
+                        break
+                    except Exception as e:
+                        print(f"Error executing {cmd}: {e}")
+                        found = True
+                        break
+
+            if not found:
+                print(f"{cmd}: command not found")
 
 if __name__ == "__main__":
     main()
