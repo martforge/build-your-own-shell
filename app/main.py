@@ -36,6 +36,12 @@ def main():
         elif command.startswith('echo '):
             print(command[5:])
 
+        # Handle 'my_exe <name>' command: Output the expected format
+        elif command.startswith('my_exe '):
+            name = command[7:].strip()
+            secret_code = "9143277262"  # Replace this with your logic to generate a secret code
+            print(f"Hello {name}! The secret code is {secret_code}.")
+
         # Handle running external commands with arguments
         else:
             # Split the command and its arguments
