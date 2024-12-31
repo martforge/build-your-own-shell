@@ -7,12 +7,8 @@ def main():
 
         command = input()
 
-        # Debugging: Log the received command
-        print(f"DEBUG: Received command: {command}")  # Debug log
-
         # Exit condition for 'exit 0'
         if command == 'exit 0':
-            print("DEBUG: Exiting program.")  # Debug log
             break
 
         # Handle invalid commands
