@@ -5,8 +5,15 @@ def main():
         sys.stdout.write("$ ")
         sys.stdout.flush()  # Ensure the prompt is displayed immediately
 
+
         command = input()
+
+        if command == '0':
+            break
+
         print(f"{command}: command not found")
+
+
 
 if __name__ == "__main__":
     main()
