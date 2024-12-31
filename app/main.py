@@ -1,6 +1,10 @@
 import os
 import subprocess
 
+def generate_secret_code(name):
+    # Simple transformation: sum the ASCII values of the characters in the name
+    return sum(ord(c) for c in name)
+
 def main():
     while True:
         # Prompt for user input
@@ -39,7 +43,7 @@ def main():
         # Handle 'my_exe <name>' command: Output the expected format
         elif command.startswith('my_exe '):
             name = command[7:].strip()
-            secret_code = "9143277262"  # Replace this with your logic to generate a secret code
+            secret_code = generate_secret_code(name)  # Generate secret code based on the name
             print(f"Hello {name}! The secret code is {secret_code}.")
 
         # Handle running external commands with arguments
